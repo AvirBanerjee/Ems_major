@@ -1,24 +1,29 @@
 import mongoose from "mongoose";
-import dotenv from "dotenv";
 
-dotenv.config();
+const employSchema = mongoose.Schema({
+    fullname: {
+        type: String,
+        required: true
+    },
+    email: {
+        type: String,
+        required: true
+    },
+    isOnProject: {
+        type: Boolean,
+        default: false
+    },
+    experience: {
+        type: Number,
+        required: true
+    },
+    completed: {
+        type: Number,
+        required: true
+    },
+    description: String,
+}, { timestamps: true });
 
-const DB_URL = process.env.DB_URL;
+const Employ = mongoose.model("employ", employSchema); // ✅ match ref
 
-const connectDB = async function () {
-    try {
-        if (!DB_URL) {
-            throw new Error("DB_URL missing in .env");
-        }
-
-        await mongoose.connect(DB_URL);
-        console.log("DB server connected");
-
-    } catch (error) {
-        console.log("DB connection failed");
-        console.log(error.message);
-        process.exit(1);
-    }
-};
-
-export default connectDB;
+export default Employ;
